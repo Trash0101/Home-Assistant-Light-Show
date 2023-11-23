@@ -1,0 +1,355 @@
+
+[
+  {
+    "entity_id": "person.trash_home",
+    "state": "unknown",
+    "attributes": {
+      "editable": true,
+      "id": "trash_home",
+      "user_id": "d0c66f8c0c664f6381076fc9ac3a5bf0",
+      "device_trackers": [],
+      "friendly_name": "Trash_home"
+    },
+    "last_changed": "2023-11-23T11:02:12.539714+00:00",
+    "last_updated": "2023-11-23T11:02:14.190213+00:00",
+    "context": {
+      "id": "01HFXXGEXEPAHW2THWYBHM1X8F",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sun.sun",
+    "state": "above_horizon",
+    "attributes": {
+      "next_dawn": "2023-11-24T05:24:35.211491+00:00",
+      "next_dusk": "2023-11-23T14:07:18.475316+00:00",
+      "next_midnight": "2023-11-23T21:45:34+00:00",
+      "next_noon": "2023-11-24T09:45:25+00:00",
+      "next_rising": "2023-11-24T06:17:04.714023+00:00",
+      "next_setting": "2023-11-23T13:15:12.131875+00:00",
+      "elevation": 5.57,
+      "azimuth": 210.88,
+      "rising": false,
+      "friendly_name": "Sun"
+    },
+    "last_changed": "2023-11-23T11:02:13.224354+00:00",
+    "last_updated": "2023-11-23T11:57:23.380346+00:00",
+    "context": {
+      "id": "01HFY0NEHME4V0TPBVTSFTD8QX",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "zone.home",
+    "state": "0",
+    "attributes": {
+      "latitude": 59.8386589,
+      "longitude": 30.25416558960159,
+      "radius": 100,
+      "passive": false,
+      "persons": [],
+      "editable": true,
+      "icon": "mdi:home",
+      "friendly_name": "Home"
+    },
+    "last_changed": "2023-11-23T11:02:13.688991+00:00",
+    "last_updated": "2023-11-23T11:02:13.688991+00:00",
+    "context": {
+      "id": "01HFXXGEDRD1MKFXJZTTKZ8CRX",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_dawn",
+    "state": "2023-11-24T05:24:35+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "icon": "mdi:sun-clock",
+      "friendly_name": "Sun Next dawn"
+    },
+    "last_changed": "2023-11-23T11:02:13.729496+00:00",
+    "last_updated": "2023-11-23T11:02:13.729496+00:00",
+    "context": {
+      "id": "01HFXXGEF1YCMH0C3VQKXVGTAJ",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_dusk",
+    "state": "2023-11-23T14:07:18+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "icon": "mdi:sun-clock",
+      "friendly_name": "Sun Next dusk"
+    },
+    "last_changed": "2023-11-23T11:02:13.729599+00:00",
+    "last_updated": "2023-11-23T11:02:13.729599+00:00",
+    "context": {
+      "id": "01HFXXGEF1SRYBCWK0MAWWWWW5",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_midnight",
+    "state": "2023-11-23T21:45:34+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "icon": "mdi:sun-clock",
+      "friendly_name": "Sun Next midnight"
+    },
+    "last_changed": "2023-11-23T11:02:13.729678+00:00",
+    "last_updated": "2023-11-23T11:02:13.729678+00:00",
+    "context": {
+      "id": "01HFXXGEF1TRFVKB5TWZR050SG",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_noon",
+    "state": "2023-11-24T09:45:25+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "icon": "mdi:sun-clock",
+      "friendly_name": "Sun Next noon"
+    },
+    "last_changed": "2023-11-23T11:02:13.729763+00:00",
+    "last_updated": "2023-11-23T11:02:13.729763+00:00",
+    "context": {
+      "id": "01HFXXGEF1GW129NV7WY8MMG1E",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_rising",
+    "state": "2023-11-24T06:17:04+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "icon": "mdi:sun-clock",
+      "friendly_name": "Sun Next rising"
+    },
+    "last_changed": "2023-11-23T11:02:13.729846+00:00",
+    "last_updated": "2023-11-23T11:02:13.729846+00:00",
+    "context": {
+      "id": "01HFXXGEF1W34BP3R20RJ09CVZ",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_setting",
+    "state": "2023-11-23T13:15:12+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "icon": "mdi:sun-clock",
+      "friendly_name": "Sun Next setting"
+    },
+    "last_changed": "2023-11-23T11:02:13.729926+00:00",
+    "last_updated": "2023-11-23T11:02:13.729926+00:00",
+    "context": {
+      "id": "01HFXXGEF143FF1R6FX0QEE4Z6",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "tts.google_en_com",
+    "state": "unknown",
+    "attributes": {
+      "friendly_name": "Google en com"
+    },
+    "last_changed": "2023-11-23T11:02:13.737615+00:00",
+    "last_updated": "2023-11-23T11:02:13.737615+00:00",
+    "context": {
+      "id": "01HFXXGEF9S5B586JJ7VFH10SX",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "weather.forecast_home",
+    "state": "snowy",
+    "attributes": {
+      "temperature": -3.7,
+      "dew_point": -6.3,
+      "temperature_unit": "°C",
+      "humidity": 83,
+      "cloud_coverage": 100.0,
+      "pressure": 984.4,
+      "pressure_unit": "hPa",
+      "wind_bearing": 173.0,
+      "wind_gust_speed": 43.2,
+      "wind_speed": 24.5,
+      "wind_speed_unit": "km/h",
+      "visibility_unit": "km",
+      "precipitation_unit": "mm",
+      "forecast": [
+        {
+          "condition": "snowy",
+          "precipitation_probability": 93.7,
+          "datetime": "2023-11-23T09:00:00+00:00",
+          "wind_bearing": 173.0,
+          "temperature": -1.5,
+          "templow": -3.7,
+          "wind_gust_speed": 43.2,
+          "wind_speed": 24.5,
+          "precipitation": 0.8,
+          "humidity": 83
+        },
+        {
+          "condition": "cloudy",
+          "precipitation_probability": 21.2,
+          "datetime": "2023-11-24T09:00:00+00:00",
+          "wind_bearing": 77.4,
+          "temperature": -1.8,
+          "templow": -4.7,
+          "wind_gust_speed": 23.8,
+          "wind_speed": 11.9,
+          "precipitation": 0.0,
+          "humidity": 85
+        },
+        {
+          "condition": "cloudy",
+          "precipitation_probability": 25.2,
+          "datetime": "2023-11-25T09:00:00+00:00",
+          "wind_bearing": 133.7,
+          "temperature": -4.5,
+          "templow": -6.9,
+          "wind_gust_speed": 15.5,
+          "wind_speed": 8.3,
+          "precipitation": 0.0,
+          "humidity": 74
+        },
+        {
+          "condition": "cloudy",
+          "precipitation_probability": 5.9,
+          "datetime": "2023-11-26T09:00:00+00:00",
+          "wind_bearing": 62.9,
+          "temperature": -9.5,
+          "templow": -11.6,
+          "wind_speed": 7.2,
+          "precipitation": 0.0,
+          "humidity": 81
+        },
+        {
+          "condition": "snowy",
+          "precipitation_probability": 60.8,
+          "datetime": "2023-11-27T09:00:00+00:00",
+          "wind_bearing": 23.6,
+          "temperature": -6.2,
+          "templow": -9.2,
+          "wind_speed": 22.0,
+          "precipitation": 7.4,
+          "humidity": 84
+        },
+        {
+          "condition": "cloudy",
+          "precipitation_probability": 51.0,
+          "datetime": "2023-11-28T09:00:00+00:00",
+          "wind_bearing": 64.7,
+          "temperature": -5.8,
+          "templow": -6.7,
+          "wind_speed": 20.9,
+          "precipitation": 3.5,
+          "humidity": 82
+        }
+      ],
+      "attribution": "Weather forecast from met.no, delivered by the Norwegian Meteorological Institute.",
+      "friendly_name": "Forecast Home",
+      "supported_features": 3
+    },
+    "last_changed": "2023-11-23T11:02:13.834382+00:00",
+    "last_updated": "2023-11-23T09:56:14.918536+00:00",
+    "context": {
+      "id": "01HFXSQME6VS7V3YCNBA86H3AJ",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "light.e27_10w",
+    "state": "on",
+    "attributes": {
+      "min_color_temp_kelvin": 2000,
+      "max_color_temp_kelvin": 6535,
+      "min_mireds": 153,
+      "max_mireds": 500,
+      "supported_color_modes": [
+        "brightness",
+        "color_temp",
+        "hs"
+      ],
+      "color_mode": "hs",
+      "brightness": 255,
+      "hs_color": [
+        0.0,
+        100.0
+      ],
+      "rgb_color": [
+        255,
+        0,
+        0
+      ],
+      "xy_color": [
+        0.701,
+        0.299
+      ],
+      "friendly_name": "E27-10W",
+      "supported_features": 0
+    },
+    "last_changed": "2023-11-23T09:03:46.698237+00:00",
+    "last_updated": "2023-11-23T09:03:46.698237+00:00",
+    "context": {
+      "id": "01HFXPQJ0A93TNH9G2KCNEGRGD",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "light.e14_5w",
+    "state": "on",
+    "attributes": {
+      "min_color_temp_kelvin": 2000,
+      "max_color_temp_kelvin": 6535,
+      "min_mireds": 153,
+      "max_mireds": 500,
+      "supported_color_modes": [
+        "brightness",
+        "color_temp",
+        "hs"
+      ],
+      "color_mode": "color_temp",
+      "brightness": 255,
+      "color_temp_kelvin": 4854,
+      "color_temp": 206,
+      "hs_color": [
+        26.874,
+        21.263
+      ],
+      "rgb_color": [
+        255,
+        225,
+        200
+      ],
+      "xy_color": [
+        0.378,
+        0.352
+      ],
+      "friendly_name": "E14-5W",
+      "supported_features": 0
+    },
+    "last_changed": "2023-11-23T09:03:46.698473+00:00",
+    "last_updated": "2023-11-23T09:04:19.041772+00:00",
+    "context": {
+      "id": "01HFXPRH9K1D75FFMD9PGMNER0",
+      "parent_id": null,
+      "user_id": "d0c66f8c0c664f6381076fc9ac3a5bf0"
+    }
+  }
+]
