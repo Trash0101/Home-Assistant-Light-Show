@@ -10,7 +10,7 @@ let selectedLight = reactive<Light>(mainStore.getLight(mainStore.getSelectedLigh
 const {selectedLight: selectedLightId} = storeToRefs(mainStore)
 
 watch(selectedLight, async() => {
-  const res = await $fetch('/api/setLightParams', {
+  await $fetch('/api/setLightParams', {
     method: 'post',
     body: {
       entity_id: selectedLight.entity_id,
@@ -34,13 +34,13 @@ const randomizer = async () => {
 <section class="control">
 
   <div class="control__name">{{selectedLight.attributes.friendly_name}}</div>
-  <div class="control__red">
+  <div class="control__red" v-if="selectedLight.attributes.rgb_color">
     <input class="control__red" v-model="selectedLight.attributes.rgb_color[0]">
   </div>
-  <div class="control__green">
+  <div class="control__green" v-if="selectedLight.attributes.rgb_color">
     <input class="control__green" v-model="selectedLight.attributes.rgb_color[1]">
   </div>
-  <div class="control__blue">
+  <div class="control__blue" v-if="selectedLight.attributes.rgb_color">
     <input class="control__blue" v-model="selectedLight.attributes.rgb_color[2]">
   </div>
   <div class="control__brightness">
