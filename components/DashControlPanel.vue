@@ -1,26 +1,45 @@
 <script setup lang="ts">
 
 
+import {setStoreLights, useHalsStoreMain} from "#imports";
+
+
 const red = ref<number[]>()
 const green = ref<number[]>()
 const blue = ref<number[]>()
 const brightness = ref<number>()
-const props = defineProps<{
-  selectedLight: Light
-}>()
-red.value = props.selectedLight.attributes.rgb_color[0]
-green.value = props.selectedLight.attributes.rgb_color[1]
-blue.value = props.selectedLight.attributes.rgb_color[2]
+
+const mainStore = useHalsStoreMain()
+let selectedLight = ref(mainStore.getLight(mainStore.getSelectedLight))
+
+const {selectedLight: selectedLightId} = storeToRefs(mainStore)
+
+
+red.value = selectedLight?.value.attributes.rgb_color[0]
+green.value = selectedLight.value?.attributes.rgb_color[1]
+blue.value = selectedLight.value?.attributes.rgb_color[2]
 watch([red, green, blue, brightness], async() => {
   const res = await $fetch('/api/setLightParams', {
     method: 'post',
     body: {
-      entity_id: props.selectedLight.entity_id,
+      entity_id: selectedLight.value.entity_id,
       brightness: brightness.value,
       rgb_color: [red.value, green.value, blue.value]
     }
   })
-  console.log(res)
+  mainStore.setLightRGBA([red.value,
+        green.value,
+        blue.value,
+        brightness.value],
+      selectedLightId.value)
+})
+watch(selectedLightId, async ()=> {
+
+  await setStoreLights()
+  selectedLight.value = mainStore.getLight(mainStore.selectedLight)
+  red.value = selectedLight?.value.attributes.rgb_color[0]
+  green.value = selectedLight.value?.attributes.rgb_color[1]
+  blue.value = selectedLight.value?.attributes.rgb_color[2]
 })
 const randomizer = async () => {
   await $fetch('/api/setLightRand', { method: 'post'})
@@ -29,7 +48,8 @@ const randomizer = async () => {
 
 <template>
 <section class="control">
-  <div class="control__name">{{props.selectedLight.attributes.friendly_name}}</div>
+
+  <div class="control__name">{{selectedLight.attributes.friendly_name}}</div>
   <div class="control__red">
     <input class="control__red" v-model="red">
   </div>

@@ -1,33 +1,28 @@
 <script setup lang="ts">
 import type {Light} from "~/types/types";
+import {useHalsStoreMain} from "#imports";
 
-const ref1 = ref()
 const props = defineProps<{
  light: Light
 }>()
-const emits = defineEmits<{
-  (e: 'selectLight', lightInfo: Light):void
-}>()
-const lightState = ref(props.light.state)
-const lightColor = ref(props.light.attributes.rgb_color ?? props.light.attributes.color_temp_kelvin)
-const lightBrightness = ref(props.light.attributes.brightness ?? 255)
-const lightColorString = ref([...lightColor.value, (lightBrightness.value/255).toFixed(1)].join(','))
-const lightName = ref(props.light.attributes.friendly_name)
-const lightColorInfoClass = reactive({
-  background: `linear-gradient(to bottom, rgba(${lightColorString.value}), #595959)`,
+
+const mainStore = useHalsStoreMain()
+const lightColorInfoClass = computed(()=> {
+  return {
+    background: `rgb(${props.light.attributes.rgb_color.join(',')})`
+  }
 })
-const selectLight = () => {
-  emits('selectLight', props.light)
+const setCurrentLight = () => {
+  mainStore.setSelectedLight(props.light.entity_id)
 }
-console.log(`linear-gradient(to bottom, rgba(${lightColorString.value}), #595959)`)
 </script>
 
 <template>
-<div @click="selectLight" class="lightInfo">
+<div @click="setCurrentLight" class="lightInfo">
   <div :style="lightColorInfoClass" class="lightInfo__color">color</div>
   <div class="lightInfo__main">
-    <span>{{lightName}}</span>
-    <span>Status: {{lightState}}</span>
+    <span>{{props.light.attributes.friendly_name}}</span>
+    <span>Status: {{light.state}}</span>
   </div>
 </div>
 </template>
@@ -44,7 +39,8 @@ console.log(`linear-gradient(to bottom, rgba(${lightColorString.value}), #595959
   transition: all .1s ease-out;
   &__color {
     height: 80%;
-    clip-path: circle(1rem);
+    width: 6rem;
+    clip-path: circle(2rem);
   }
   &__main {
     font-size: 1.6rem;
@@ -61,5 +57,4 @@ console.log(`linear-gradient(to bottom, rgba(${lightColorString.value}), #595959
     outline: .75rem solid $highlight_alt;
   }
 }
-
 </style>

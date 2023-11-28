@@ -1,26 +1,19 @@
 <script setup lang="ts">
 import type {Light} from "~/types/types";
+import {useHalsStoreMain} from "#imports";
 
 useHead({
   title: 'Dashboard'
 })
-const runtimeConfig = useRuntimeConfig()
-let selectedLight = reactive<Light>()
-const isSelected = ref(false)
-const changeSelectedLight = (light:Ref<Light>) => {
-  console.log(light)
-  selectedLight = {
-    ...light
-  }
-  console.log(selectedLight)
-  !isSelected.value
-}
+const mainStore = useHalsStoreMain()
+const isSelected = ref(!!mainStore.selectedLight)
+
 </script>
 
 <template>
 <section class="dash">
-  <dash-list @select-light="changeSelectedLight" ></dash-list>
-  <dash-control-panel v-if="!isSelected" :selectedLight="selectedLight"></dash-control-panel>
+  <dash-list></dash-list>
+  <dash-control-panel v-if="isSelected"></dash-control-panel>
 </section>
 </template>
 

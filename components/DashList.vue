@@ -1,21 +1,14 @@
 <script setup lang="ts">
+import {useHalsStoreMain} from "#imports";
 
-  const {data, pending, error, refresh}: {data: Ref<Light[]>} = await useFetch('/api/getLightsList', {
-    method: 'get',
-    server: false,
-    lazy: true,
-  })
-  const emits = defineEmits<{
-    (e: 'selectLight', lightInfo: Light):void
-  }>()
-  const sendUpwards = (payload) => {
-    emits('selectLight', payload)
-  }
+const mainStore = useHalsStoreMain()
+const {lightsList: reactiveLightsList} = storeToRefs(mainStore)
 </script>
 
 <template>
 <div class="dash__list shadow-md">
-  <dash-list-light @select-light="sendUpwards" v-for="light in data" :key="light.entity_id" :light="light"></dash-list-light>
+  <dash-list-light v-if="!!mainStore.lightsList" v-for="(light, index) in reactiveLightsList" :key="light.entity_id" :light="light"></dash-list-light>
+  <div v-else>Sorry but no lights were found</div>
 </div>
 </template>
 
