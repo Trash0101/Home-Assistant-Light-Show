@@ -2,44 +2,28 @@
 
 
 import {setStoreLights, useHalsStoreMain} from "#imports";
-
-
-const red = ref<number[]>()
-const green = ref<number[]>()
-const blue = ref<number[]>()
-const brightness = ref<number>()
+import type {Light} from "~/types/types";
 
 const mainStore = useHalsStoreMain()
-let selectedLight = ref(mainStore.getLight(mainStore.getSelectedLight))
+let selectedLight = reactive<Light>(mainStore.getLight(mainStore.getSelectedLight))
 
 const {selectedLight: selectedLightId} = storeToRefs(mainStore)
 
-
-red.value = selectedLight?.value.attributes.rgb_color[0]
-green.value = selectedLight.value?.attributes.rgb_color[1]
-blue.value = selectedLight.value?.attributes.rgb_color[2]
-watch([red, green, blue, brightness], async() => {
+watch(selectedLight, async() => {
   const res = await $fetch('/api/setLightParams', {
     method: 'post',
     body: {
-      entity_id: selectedLight.value.entity_id,
-      brightness: brightness.value,
-      rgb_color: [red.value, green.value, blue.value]
+      entity_id: selectedLight.entity_id,
+      brightness: selectedLight.attributes.brightness,
+      rgb_color: selectedLight.attributes.rgb_color
     }
   })
-  mainStore.setLightRGBA([red.value,
-        green.value,
-        blue.value,
-        brightness.value],
+  mainStore.setLightRGBA([...selectedLight.attributes.rgb_color, selectedLight.attributes.brightness],
       selectedLightId.value)
 })
 watch(selectedLightId, async ()=> {
-
   await setStoreLights()
   selectedLight.value = mainStore.getLight(mainStore.selectedLight)
-  red.value = selectedLight?.value.attributes.rgb_color[0]
-  green.value = selectedLight.value?.attributes.rgb_color[1]
-  blue.value = selectedLight.value?.attributes.rgb_color[2]
 })
 const randomizer = async () => {
   await $fetch('/api/setLightRand', { method: 'post'})
@@ -51,16 +35,16 @@ const randomizer = async () => {
 
   <div class="control__name">{{selectedLight.attributes.friendly_name}}</div>
   <div class="control__red">
-    <input class="control__red" v-model="red">
-  </div>
-  <div class="control__blue">
-    <input class="control__blue" v-model="blue">
+    <input class="control__red" v-model="selectedLight.attributes.rgb_color[0]">
   </div>
   <div class="control__green">
-    <input class="control__green" v-model="green">
+    <input class="control__green" v-model="selectedLight.attributes.rgb_color[1]">
+  </div>
+  <div class="control__blue">
+    <input class="control__blue" v-model="selectedLight.attributes.rgb_color[2]">
   </div>
   <div class="control__brightness">
-    <input class="control__brightness" v-model="brightness">
+    <input class="control__brightness" v-model="selectedLight.attributes.brightness">
   </div>
   <button @click="randomizer">RANDOM</button>
 </section>
