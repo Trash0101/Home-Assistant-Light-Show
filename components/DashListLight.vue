@@ -8,8 +8,15 @@ const props = defineProps<{
 
 const mainStore = useHalsStoreMain()
 const lightColorInfoClass = computed(()=> {
-  return {
-    background: `rgb(${props.light.attributes.rgb_color.join(',')})`
+  if(props.light.attributes.rgb_color) {
+    return {
+      background: `rgb(${props.light.attributes.rgb_color.join(',')})`
+    }
+  }
+  else if(props.light.attributes.color_temp_kelvin) {
+    return {
+      background: ``
+    }
   }
 })
 const setCurrentLight = () => {

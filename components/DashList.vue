@@ -3,11 +3,14 @@ import {useHalsStoreMain} from "#imports";
 
 const mainStore = useHalsStoreMain()
 const {lightsList: reactiveLightsList} = storeToRefs(mainStore)
+const lightListExists = computed(() => {
+  return !!mainStore.lightsList
+})
 </script>
 
 <template>
 <div class="dash__list shadow-md">
-  <dash-list-light v-if="!!mainStore.lightsList" v-for="(light, index) in reactiveLightsList" :key="light.entity_id" :light="light"></dash-list-light>
+  <dash-list-light v-if="lightListExists" v-for="light in reactiveLightsList" :key="light.entity_id" :light="light"></dash-list-light>
   <div v-else>Sorry but no lights were found</div>
 </div>
 </template>

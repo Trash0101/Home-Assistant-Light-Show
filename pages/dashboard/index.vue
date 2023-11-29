@@ -6,14 +6,14 @@ useHead({
   title: 'Dashboard'
 })
 const mainStore = useHalsStoreMain()
-const isSelected = ref(!!mainStore.selectedLight)
-
+const {selectedLightExists} = storeToRefs(mainStore)
+const devToggle = ref(true)
 </script>
 
 <template>
 <section class="dash">
   <dash-list></dash-list>
-  <dash-control-panel v-if="isSelected"></dash-control-panel>
+  <dash-control-panel v-if="selectedLightExists"></dash-control-panel>
 </section>
 </template>
 

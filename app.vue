@@ -35,7 +35,7 @@ useHead({
 const appInitialized = ref(false)
 const initialize = async () => {
   await setStoreLights()
-  mainStore.setSelectedLight(mainStore.lightsList[0].entity_id);
+  mainStore.setSelectedLightIndex(0);
   appInitialized.value = true
 }
 

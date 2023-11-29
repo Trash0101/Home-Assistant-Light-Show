@@ -1,33 +1,19 @@
 <script setup lang="ts">
-
-
-import {setStoreLights, useHalsStoreMain} from "#imports";
-import type {Light} from "~/types/types";
+import {useHalsStoreMain} from "#imports";
+import setRGB from "~/composables/setRGB";
 
 const mainStore = useHalsStoreMain()
-let selectedLight = reactive<Light>(mainStore.getLight(mainStore.getSelectedLight))
-
-const {selectedLight: selectedLightId} = storeToRefs(mainStore)
-
-watch(selectedLight, async() => {
-  await $fetch('/api/setLightParams', {
-    method: 'post',
-    body: {
-      entity_id: selectedLight.entity_id,
-      brightness: selectedLight.attributes.brightness,
-      rgb_color: selectedLight.attributes.rgb_color
-    }
-  })
-  mainStore.setLightRGBA([...selectedLight.attributes.rgb_color, selectedLight.attributes.brightness],
-      selectedLightId.value)
-})
-watch(selectedLightId, async ()=> {
-  await setStoreLights()
-  selectedLight.value = mainStore.getLight(mainStore.selectedLight)
-})
+const {selectedLight} = storeToRefs(mainStore)
 const randomizer = async () => {
   await $fetch('/api/setLightRand', { method: 'post'})
 }
+watch(selectedLight, async () => {
+  await setRGB(selectedLight.value)
+}, {
+  deep: true
+})
+
+
 </script>
 
 <template>

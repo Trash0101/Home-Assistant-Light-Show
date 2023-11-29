@@ -14,6 +14,6 @@ export default defineEventHandler(async (event) => {
             flash: 'short',
         }
     })
-
+    console.log(homeAssistRes)
     return homeAssistRes
 })
