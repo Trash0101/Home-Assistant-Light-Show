@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type {Light} from "~/types/types";
 import {useHalsStoreMain} from "#imports";
 
 useHead({
