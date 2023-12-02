@@ -38,13 +38,9 @@ export const useHalsStoreMain = defineStore('main', () => {
     }
 
     const lightExists = (id:string) => {
-        if(lightsList.value){
-            return !!lightsList.value.find(el => {
-                return el.entity_id === id;
-            })
-        } else {
-            return false;
-        }
+        return !!lightsList.value.find(el => {
+            return el.entity_id === id;
+            }) ?? false
     }
     // const setLightRGBA = (args:number[], index:number) => {
     //     lightsList.value[index].attributes.rgb_color[0] = args[0]

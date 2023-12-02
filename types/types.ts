@@ -1,3 +1,5 @@
+
+
 export interface Light {
     entity_id: string,
     state: string,
@@ -16,4 +18,11 @@ export interface Light {
         friendly_name: string,
         supported_features: number
     }
+}
+export interface Song {
+    id: string
+    URL: string
+    buffer: AudioBuffer
+    tempo: number
+    metaData: any
 }

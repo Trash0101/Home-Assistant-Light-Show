@@ -14,13 +14,23 @@
     "@nuxtjs/fontaine": "^0.4.1",
     "@unocss/nuxt": "^0.57.1",
     "nuxt": "^3.8.2",
+    "nuxt-phosphor-icons": "^1.0.8",
     "sass": "^1.69.5",
+    "vite-plugin-vuetify": "^1.0.2",
     "vue": "^3.3.7",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.4.4"
   },
   "dependencies": {
+    "@mdi/font": "^7.3.67",
     "@pinia/nuxt": "^0.5.1",
+    "jsmediatags": "^3.9.7",
     "kelvin-to-rgb": "^1.0.2",
-    "pinia": "^2.1.7"
+    "mp3tag.js": "^3.7.1",
+    "music-metadata-browser": "^2.5.10",
+    "pinia": "^2.1.7",
+    "set-interval-async": "^3.0.3",
+    "uuid": "^9.0.1",
+    "web-audio-beat-detector": "^8.1.56"
   }
 }

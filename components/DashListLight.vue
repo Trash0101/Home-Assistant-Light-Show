@@ -36,7 +36,7 @@ const setCurrentLight = () => {
 
 <style scoped lang="scss">
 .lightInfo{
-  height: 10rem;
+  height: 8rem;
   padding: 1.5rem 2rem;
   display: flex;
   background-color: $base_color_medium;

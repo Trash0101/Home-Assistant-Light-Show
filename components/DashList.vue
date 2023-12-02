@@ -17,6 +17,7 @@ const lightListExists = computed(() => {
 
 <style lang="scss" scoped>
 .dash__list{
+  padding: 1.5rem 2rem;
   background: linear-gradient(to bottom, $base_color 80%,  rgba($base_color_light, 0.1) 99%);
   border-radius: 1rem;
   grid-row: 1/5;

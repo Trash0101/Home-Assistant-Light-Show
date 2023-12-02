@@ -1,10 +1,12 @@
 <template>
-  <div v-if="!appInitialized" class="modal--backdrop">
-    <div class="modal--main">Initialize
-      <button @click="initialize">Start</button>
+  <v-app>
+    <div v-if="!appInitialized" class="modal--backdrop">
+      <div class="modal--main">Initialize
+        <button @click="initialize">Start</button>
+      </div>
     </div>
-  </div>
-  <nuxt-page v-else></nuxt-page>
+    <nuxt-page v-else></nuxt-page>
+  </v-app>
 </template>
 
 <script setup lang="ts">
@@ -55,7 +57,7 @@ const initialize = async () => {
 }
 html{
   font-size: 62.5%;
-  font-family: Roboto, sans-serif;
+  font-family:  Roboto, sans-serif;
   color: $font_color;
   background-color: $base_color_dark;
   height: 100vh;
