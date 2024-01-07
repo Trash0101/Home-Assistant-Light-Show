@@ -59,7 +59,7 @@ html{
   font-size: 62.5%;
   font-family:  Roboto, sans-serif;
   color: $font_color;
-  background-color: $base_color_dark;
+  background-color: white;
   height: 100vh;
 }
 .modal--backdrop {

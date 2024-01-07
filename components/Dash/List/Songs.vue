@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {usePlayerStore} from "#imports";
-import DashSongsListSong from "~/components/DashSongsListSong.vue";
+import DashSongsListSong from "~/components/Dash/List/SongsEntry.vue";
 
 const playerStore = usePlayerStore()
 const {songsList} = storeToRefs(playerStore)
@@ -13,17 +13,17 @@ const handleFileUpload = async (event) => {
 
 <template>
 <div class="song-list">
-  <dash-songs-list-song v-if="songsList[0]" v-for="(song, index) in songsList"
+  <dash-list-songs-entry v-if="songsList[0]" v-for="(song, index) in songsList"
                         :key="song.id"
                         :song="song"
-                        :songIndex="index"></dash-songs-list-song>
+                        :songIndex="index"></dash-list-songs-entry>
   <div v-else class="song-list__error">
     Upload some songs to begin
     <input @change="handleFileUpload" id="files" style="display: none" type="file" accept="audio/mp3">
     <label class="song-list__input" for="files">Upload file</label>
-  </div>
+  </div >
   <input @change="handleFileUpload" id="files" style="display: none" type="file" accept="audio/mp3">
-  <label class="song-list__input" for="files">Upload file</label>
+  <label v-if="songsList[0]" class="song-list__input" for="files">Upload file</label>
 </div>
 </template>
 
@@ -40,6 +40,13 @@ const handleFileUpload = async (event) => {
   justify-content: flex-start;
   align-items: center;
   color: $font_color;
+  overflow: scroll;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  scrollbar-color: $highlight_alt;
+  &:hover{
+    scrollbar-color: $highlight;
+  }
   &__input {
     color: $font_color;
     display:block;

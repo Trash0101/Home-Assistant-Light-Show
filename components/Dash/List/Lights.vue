@@ -10,7 +10,7 @@ const lightListExists = computed(() => {
 
 <template>
 <div class="dash__list shadow-md">
-  <dash-list-light v-if="lightListExists" v-for="light in reactiveLightsList" :key="light.entity_id" :light="light"></dash-list-light>
+  <dash-list-lights-entry v-if="lightListExists" v-for="light in reactiveLightsList" :key="light.entity_id" :light="light"></dash-list-lights-entry>
   <div v-else>Sorry but no lights were found</div>
 </div>
 </template>

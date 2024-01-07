@@ -7,30 +7,15 @@ const props = defineProps<{
   songIndex: number
 }>()
 const image:Ref<HTMLImageElement|null> = ref(null);
-let base64 = ""
+const {selectedSongIndex} = storeToRefs(playerStore)
 const selectSong = async () => {
   await playerStore.setSelectedSong(props.songIndex)
-  playerStore.setSelectedSongCover(base64)
 }
-console.log(props.song.metaData)
-const imageParser = ()=> {
-  if(props.song.metaData.v2 && props.song.metaData.v2?.APIC){
-  let base64String = "";
-  const imageData = toRaw(props.song.metaData.v2.APIC[0]);
-  console.log(image)
-    imageData.data.forEach(el => {
-    base64String += String.fromCharCode(el);
-  })
-  base64 = "data:" + imageData.format + ";base64," + window.btoa(base64String);
-  image.value.src = base64;
-} else {
-    base64 = 'blank.jpg'
-    image.value.src = base64
-  }
-}
-onMounted(()=> {
-  imageParser();
+const isActive = computed(()=>{
+  return selectedSongIndex.value === props.songIndex;
 })
+
+
 const metaInfo = ref({
   album: props.song.metaData?.album !== ''? props.song.metaData?.album : 'Unknown',
   artist: props.song.metaData?.artist !== ''? props.song.metaData?.artist : 'Unknown',
@@ -40,15 +25,18 @@ const metaInfo = ref({
 </script>
 
 <template>
-  <div @click="selectSong" class="song--container">
+  <div @click="selectSong" :class="{active: isActive}" class="song--container">
       <div class="song--container__title">{{metaInfo.title}}</div>
       <div class="song--container__album">{{metaInfo.album}}</div>
       <div class="song--container__artist">{{metaInfo.artist}}</div>
-    <img class="song--container__cover" src="" alt="cover" ref="image">
+    <img class="song--container__cover" :src="props.song.cover" alt="cover" ref="image">
   </div>
 </template>
 
 <style scoped lang="scss">
+.active{
+  border-bottom: .2rem solid $highlight;
+}
 .song--container {
   overflow: hidden;
   padding: 1.5rem 2rem;
@@ -66,6 +54,7 @@ const metaInfo = ref({
   }
   &:active {
     transform: translateY(0) scale(1);
+    box-shadow:  .1rem 1rem 2rem rgba(#000, 0.6);
     outline: .75rem solid $highlight_alt;
   }
   &__title{

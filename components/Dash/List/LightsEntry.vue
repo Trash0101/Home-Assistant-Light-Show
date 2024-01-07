@@ -7,6 +7,7 @@ const props = defineProps<{
 }>()
 
 const mainStore = useHalsStoreMain()
+const {selectedLight} = storeToRefs(mainStore)
 const lightColorInfoClass = computed(()=> {
   if(props.light.attributes.rgb_color) {
     return {
@@ -22,11 +23,14 @@ const lightColorInfoClass = computed(()=> {
 const setCurrentLight = () => {
   mainStore.setSelectedLight(props.light.entity_id)
 }
+const isActive = computed(()=>{
+  return props.light.entity_id === selectedLight.value.entity_id
+})
 </script>
 
 <template>
-<div @click="setCurrentLight" class="lightInfo">
-  <div :style="lightColorInfoClass" class="lightInfo__color">color</div>
+<div :class="{active: isActive}" @click="setCurrentLight" class="lightInfo">
+  <div :style="lightColorInfoClass"  class="lightInfo__color">color</div>
   <div class="lightInfo__main">
     <span>{{props.light.attributes.friendly_name}}</span>
     <span>Status: {{light.state}}</span>
@@ -35,6 +39,9 @@ const setCurrentLight = () => {
 </template>
 
 <style scoped lang="scss">
+.active{
+  border-bottom: .2rem solid $highlight;
+}
 .lightInfo{
   height: 8rem;
   padding: 1.5rem 2rem;

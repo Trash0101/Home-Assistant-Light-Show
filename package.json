@@ -24,8 +24,10 @@
   "dependencies": {
     "@mdi/font": "^7.3.67",
     "@pinia/nuxt": "^0.5.1",
+    "@types/meyda": "^4.3.8",
     "jsmediatags": "^3.9.7",
     "kelvin-to-rgb": "^1.0.2",
+    "meyda": "^5.6.2",
     "mp3tag.js": "^3.7.1",
     "music-metadata-browser": "^2.5.10",
     "pinia": "^2.1.7",
