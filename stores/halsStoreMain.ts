@@ -120,12 +120,12 @@ export const useHalsStoreMain = defineStore('main', () => {
             }
         })
     }
-    const setLightSettings = () => {
-        if(playerStore.selectedSong){
-
-        } else {
+    const setLightRGBValue = (id:string, rgb:number[]) => {
+        let desiredIndex = getLightIndex(id)
+        if(desiredIndex === -1) {
             return false
         }
+        lightsList.value[desiredIndex].attributes.rgb_color = [...rgb]
     }
 
     return {
@@ -140,5 +140,6 @@ export const useHalsStoreMain = defineStore('main', () => {
         lightExists,
         setLights,
         lampTempoGroups,
+        setLightRGBValue,
     }
 })

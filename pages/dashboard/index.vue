@@ -21,7 +21,6 @@ onMounted(()=>{
 <template>
     <section class="dash">
       <dash-list-lights></dash-list-lights>
-      <!--  <dash-control-panel v-if="selectedLightExists"></dash-control-panel>-->
       <dash-audio-player v-if="selectedLightExists && componentMounted"></dash-audio-player>
       <dash-control-container v-if="devToggle"></dash-control-container>
       <dash-list-songs></dash-list-songs>

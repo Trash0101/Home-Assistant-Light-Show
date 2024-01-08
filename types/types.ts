@@ -63,7 +63,7 @@ export interface APILightSetting {
     color?: {
         brightness: number,
         color?: number[]
-        colorRange?: number[]
+        colorRange?: number
     }
 }
 export interface Light {

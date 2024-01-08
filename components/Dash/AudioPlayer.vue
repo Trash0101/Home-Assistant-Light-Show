@@ -119,27 +119,19 @@ const beatMultipliers = [
     0.25,
     0.125,
 ]
+//Special computed property that is extracting settings relevant to the current time on the track and sorts them by beat setting
 const specifiedSettingsByBeatAndTimeline = computed(()=> {
-  // const settings = mainStore.lampTempoGroups
   const startTimer = performance.now()
   if(lampTempoGroups.value) {
-    // const settings:SpecifiedSettingBeatsTimeline = {
-    //   one: lampTempoGroups.value.one.filter(el => el.timeRange[0] < currentTime.value && el.timeRange[1] > currentTime.value),
-    //   two: lampTempoGroups.value.two.filter(el => el.timeRange[0] < currentTime.value && el.timeRange[1] > currentTime.value),
-    //   three: lampTempoGroups.value.three.filter(el => el.timeRange[0] < currentTime.value && el.timeRange[1] > currentTime.value),
-    //   four: lampTempoGroups.value.four.filter(el => el.timeRange[0] < currentTime.value && el.timeRange[1] > currentTime.value),
-    //   oneHalf: lampTempoGroups.value.oneHalf.filter(el => el.timeRange[0] < currentTime.value && el.timeRange[1] > currentTime.value),
-    //   oneFourth: lampTempoGroups.value.oneFourth.filter(el => el.timeRange[0] < currentTime.value && el.timeRange[1] > currentTime.value),
-    //   oneEight: lampTempoGroups.value.oneEight.filter(el => el.timeRange[0] < currentTime.value && el.timeRange[1] > currentTime.value)
-    // }
+
     const settings:SpecifiedSetting[][] = new Array(7)
-    settings[0] = lampTempoGroups.value.one.filter(el => el.timeRange[0] < currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
-    settings[1] = lampTempoGroups.value.two.filter(el => el.timeRange[0] < currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
-    settings[2] = lampTempoGroups.value.three.filter(el => el.timeRange[0] < currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
-    settings[3] = lampTempoGroups.value.four.filter(el => el.timeRange[0] < currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
-    settings[4] = lampTempoGroups.value.oneHalf.filter(el => el.timeRange[0] < currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
-    settings[5] = lampTempoGroups.value.oneFourth.filter(el => el.timeRange[0] < currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
-    settings[6] = lampTempoGroups.value.oneEight.filter(el => el.timeRange[0] < currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
+    settings[0] = lampTempoGroups.value.one.filter(el => el.timeRange[0] <= currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
+    settings[1] = lampTempoGroups.value.two.filter(el => el.timeRange[0] <= currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
+    settings[2] = lampTempoGroups.value.three.filter(el => el.timeRange[0] <= currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
+    settings[3] = lampTempoGroups.value.four.filter(el => el.timeRange[0] <= currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
+    settings[4] = lampTempoGroups.value.oneHalf.filter(el => el.timeRange[0] <= currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
+    settings[5] = lampTempoGroups.value.oneFourth.filter(el => el.timeRange[0] <= currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
+    settings[6] = lampTempoGroups.value.oneEight.filter(el => el.timeRange[0] <= currentTime.value + 0.1 && el.timeRange[1] > currentTime.value)
 
     const endTimer = performance.now()
     console.log(`Analyzing song settings beforehand took ${endTimer-startTimer}ms`)
@@ -164,7 +156,9 @@ const pauseBeatDelaysCalc = (currentTime:number ,specifiedTempo:number):number =
 const pauseBeatDelaysSetter = () => {
   if(player.value){
     pauseBeatDelays.forEach((el, index) => {
-      pauseBeatDelays[index] = pauseBeatDelaysCalc(player.value.currentTime, tempo.value/beatMultipliers[index])
+      if(player.value){
+        pauseBeatDelays[index] = pauseBeatDelaysCalc(player.value.currentTime, tempo.value/beatMultipliers[index])
+      }
     })
   } else {
     return false
@@ -183,6 +177,10 @@ const intervalInitialyzer = (index:number) => {
             lampSettings.push({
               mode: 'color',
               random: true,
+              color: {
+                brightness: Math.round(Math.random()*255),
+                color: [Math.round(Math.random()*255),Math.round(Math.random()*255),Math.round(Math.random()*255)]
+              }
             })
           } else {
             if((soundFeatures.value.spectralRolloff > el.ranges.darkness.frequency[0]
@@ -210,6 +208,9 @@ const intervalInitialyzer = (index:number) => {
                   },
                 })
               }else{
+                console.log('Zdarova ebat')
+                console.log(el.ranges.color.colorRanges[largestChromaIndex.value])
+                console.log(Math.round(Math.random() * (el.ranges.color.colorRanges[largestChromaIndex.value][1] - el.ranges.color.colorRanges[largestChromaIndex.value][0]) + el.ranges.color.colorRanges[largestChromaIndex.value][0]))
                 lampSettings.push({
                   mode: 'color',
                   random: false,
@@ -217,16 +218,15 @@ const intervalInitialyzer = (index:number) => {
                     brightness: Math.round(((soundFeatures.value.spectralRolloff - el.ranges.darkness.frequency[1])/(el.ranges.flash.frequency[0] - el.ranges.darkness.frequency[1]))
                         *(el.ranges.color.brightness[1] - el.ranges.color.brightness[0])
                         +el.ranges.color.brightness[0]),
-                    colorRange: el.ranges.color.colorRanges[largestChromaIndex.value]
+                    colorRange: Math.round(Math.random() * (el.ranges.color.colorRanges[largestChromaIndex.value][1] - el.ranges.color.colorRanges[largestChromaIndex.value][0]) + el.ranges.color.colorRanges[largestChromaIndex.value][0])
+
                   },
                 })
               }
             }
           }
         })
-        previousRolloffs[0] = soundFeatures.value.spectralRolloff
-        console.log(lamps)
-        console.log(lampSettings)
+        previousRolloffs[index] = soundFeatures.value.spectralRolloff
         await $fetch('/api/setLightParams', {
           method:"post",
           body: {
@@ -234,9 +234,58 @@ const intervalInitialyzer = (index:number) => {
             settings: lampSettings,
           }
         })
+        const hslToRgb = (h:number, s:number, l:number):number[] => {
+          let r, g, b;
+
+          if (s === 0) {
+            r = g = b = l; // achromatic
+          } else {
+            const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+            const p = 2 * l - q;
+            r = hueToRgb(p, q, h + 1/3);
+            g = hueToRgb(p, q, h);
+            b = hueToRgb(p, q, h - 1/3);
+          }
+
+          return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+        }
+
+        const hueToRgb = (p:number, q:number, t:number) => {
+          if (t < 0) t += 1;
+          if (t > 1) t -= 1;
+          if (t < 1/6) return p + (q - p) * 6 * t;
+          if (t < 1/2) return q;
+          if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+          return p;
+        }
+        lamps.forEach((el, index)=> {
+          let RGB
+          switch(lampSettings[index].mode) {
+            case "flash":
+              RGB = [255,255,255]
+                  break
+            case "darkness":
+              RGB = [0,0,0]
+                  break
+            case "color":
+              if(lampSettings[index].color){
+                if(lampSettings[index].color.color){
+                  RGB = [...lampSettings[index].color.color]
+                } else if(lampSettings[index].color.colorRange){
+                  RGB = hslToRgb((1/360)*lampSettings[index].color.colorRange, 1, 1)
+                } else {
+                  RGB = [124,124,124]
+                }
+              } else {
+                RGB = [124,124,124]
+              }
+          }
+          if(!RGB){
+            RGB = [124,124,124]
+          }
+          mainStore.setLightRGBValue(el,RGB)
+        })
         pauseBeatDelays[index] = 0
-        console.log(beatMultipliers[index]);
-        console.log(index)
       }
     }, (1000 * 60 / (tempo.value/beatMultipliers[index])))
   }, pauseBeatDelays[index])
@@ -262,9 +311,7 @@ const switchPlay = async () => {
     if(specifiedSettingsByBeatAndTimeline.value){
       await nextTick()
       specifiedSettingsByBeatAndTimeline.value.forEach((el, index) => {
-        console.log(el)
         if(el.length > 0) {
-          console.log('Index', index)
           intervalInitialyzer(index);
         }
       })
@@ -572,7 +619,6 @@ watch(canvasElement, ()=> {
   height: 100%;
   position: relative;
   &__main {
-
     position: relative;
     width: 100%;
     height: 100%;

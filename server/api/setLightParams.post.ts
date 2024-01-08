@@ -2,22 +2,8 @@ export default defineEventHandler(async (event) => {
     const runtimeConfig = useRuntimeConfig(event)
     const body = await readBody(event);
     console.log(body);
+    console.log(body.settings[0].color)
     await Promise.all(body.id.map(async (el, index:number) => {
-        if(body.settings[index].random){
-            await $fetch(`${runtimeConfig.homeAssistAddress}/api/services/light/turn_on`, {
-                method: 'post',
-                headers: {
-                    authorization: `Bearer ${runtimeConfig.homeAssistKey}`,
-                    accept: '*/*'
-                },
-                body: {
-                    entity_id: body.id[index],
-                    brightness: Math.round(Math.random()*255),
-                    rgb_color: [Math.round(Math.random()*255), Math.round(Math.random()*255),Math.round(Math.random()*255)],
-                    transition: 0,
-                }
-            })
-        } else {
             if(body.settings[index].mode === 'color' && body.settings[index].color.color){
                 await $fetch(`${runtimeConfig.homeAssistAddress}/api/services/light/turn_on`, {
                     method: 'post',
@@ -58,8 +44,21 @@ export default defineEventHandler(async (event) => {
                         brightness: 0,
                     }
                 })
+            } else if(body.settings[index].mode === 'color' && body.settings[index].color.colorRange){
+                await $fetch(`${runtimeConfig.homeAssistAddress}/api/services/light/turn_on`, {
+                    method: 'post',
+                    headers: {
+                        authorization: `Bearer ${runtimeConfig.homeAssistKey}`,
+                        accept: '*/*'
+                    },
+                    body: {
+                        entity_id: body.id[index],
+                        brightness: body.settings[index].color.brightness,
+                        hs_color: [body.settings[index].color.colorRange, 100],
+                        flash: 'short',
+                    }
+                })
             }
-        }
+
     }));
-    // console.log(homeAssistRes)
 })
