@@ -1,14 +1,14 @@
 export default defineEventHandler(async (event) => {
     const runtimeConfig = useRuntimeConfig(event)
     const body = await readBody(event);
-    console.log(body);
-    console.log(body.settings[0].color)
+    const address = await useStorage().getItem('address')
+    const key = await useStorage().getItem('key')
     await Promise.all(body.id.map(async (el, index:number) => {
             if(body.settings[index].mode === 'color' && body.settings[index].color.color){
-                await $fetch(`${runtimeConfig.homeAssistAddress}/api/services/light/turn_on`, {
+                await $fetch(`${address}/api/services/light/turn_on`, {
                     method: 'post',
                     headers: {
-                        authorization: `Bearer ${runtimeConfig.homeAssistKey}`,
+                        authorization: `Bearer ${runtimeConfig.key}`,
                         accept: '*/*'
                     },
                     body: {
@@ -20,10 +20,10 @@ export default defineEventHandler(async (event) => {
                     }
                 })
             } else if(body.settings[index].mode === 'flash'){
-                await $fetch(`${runtimeConfig.homeAssistAddress}/api/services/light/turn_on`, {
+                await $fetch(`${address}/api/services/light/turn_on`, {
                     method: 'post',
                     headers: {
-                        authorization: `Bearer ${runtimeConfig.homeAssistKey}`,
+                        authorization: `Bearer ${runtimeConfig.key}`,
                         accept: '*/*'
                     },
                     body: {
@@ -33,10 +33,10 @@ export default defineEventHandler(async (event) => {
                     }
                 })
             } else if(body.settings[index].mode === 'darkness') {
-                await $fetch(`${runtimeConfig.homeAssistAddress}/api/services/light/turn_on`, {
+                await $fetch(`${address}/api/services/light/turn_on`, {
                     method: 'post',
                     headers: {
-                        authorization: `Bearer ${runtimeConfig.homeAssistKey}`,
+                        authorization: `Bearer ${runtimeConfig.key}`,
                         accept: '*/*'
                     },
                     body: {
@@ -45,10 +45,10 @@ export default defineEventHandler(async (event) => {
                     }
                 })
             } else if(body.settings[index].mode === 'color' && body.settings[index].color.colorRange){
-                await $fetch(`${runtimeConfig.homeAssistAddress}/api/services/light/turn_on`, {
+                await $fetch(`${address}/api/services/light/turn_on`, {
                     method: 'post',
                     headers: {
-                        authorization: `Bearer ${runtimeConfig.homeAssistKey}`,
+                        authorization: `Bearer ${runtimeConfig.key}`,
                         accept: '*/*'
                     },
                     body: {

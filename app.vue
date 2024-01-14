@@ -1,11 +1,8 @@
 <template>
-  <v-app>
-    <div v-if="!appInitialized" class="modal--backdrop">
-      <div class="modal--main">Initialize
-        <button @click="initialize">Start</button>
-      </div>
-    </div>
-    <nuxt-page v-else></nuxt-page>
+  <v-app class="hals-app">
+    <nuxt-layout>
+      <nuxt-page></nuxt-page>
+    </nuxt-layout>
   </v-app>
 </template>
 
@@ -61,6 +58,9 @@ html{
   color: $font_color;
   background-color: white;
   height: 100vh;
+}
+.hals-app {
+  color: $font_color !important;
 }
 .modal--backdrop {
   position: absolute;

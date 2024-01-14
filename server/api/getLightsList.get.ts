@@ -2,10 +2,12 @@ import {Light} from "~/types/types";
 
 export default defineEventHandler(async (event) => {
     const runtimeConfig = useRuntimeConfig(event)
-    const homeAssistRes =  await $fetch<[]>(`${runtimeConfig.homeAssistAddress}/api/states`, {
+    const address = await useStorage().getItem('address')
+    const key = await useStorage().getItem('key')
+    const homeAssistRes =  await $fetch<[]>(`${address}/api/states`, {
         method: 'get',
         headers: {
-            authorization: `Bearer ${runtimeConfig.homeAssistKey}`,
+            authorization: `Bearer ${key}`,
             accept: '*/*'
         }
     })
