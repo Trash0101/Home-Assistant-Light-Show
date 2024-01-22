@@ -71,18 +71,19 @@ watch(dataKey, async ()=> {
     <div class="testing">
       <div class="testing__text">
         <span class="testing__text--label">Checking connection to the server</span>
-        <ph-spinner-gap v-if="pending" class="testing__text--spinner" :size="32" />
-        <ph-check v-if="!pending && !addressError" class="testing__text--confirm" :size="32" />
-        <phx v-if="addressError" class="testing__text--error" :size="32" />
+        <PHSpinnerGap v-if="pending" class="testing__text--spinner" :size="32" />
+        <PHCheck v-if="!pending && !addressError" class="testing__text--confirm" :size="32" />
+        <PHX v-if="addressError" class="testing__text--error" :size="32" />
       </div>
       <div class="testing__text">
         <span class="testing__text--label">Checking authorization</span>
-        <ph-spinner-gap v-if="pendingKey" class="testing__text--spinner" :size="32" />
-        <ph-check v-if="!pendingKey && !keyError" class="testing__text--confirm" :size="32" />
-        <phx v-if="keyError" class="testing__text--error" :size="32" />
+        <PHSpinnerGap v-if="pendingKey" class="testing__text--spinner" :size="32" />
+        <PHCheck v-if="!pendingKey && !keyError" class="testing__text--confirm" :size="32" />
+        <PHX v-if="keyError" class="testing__text--error" :size="32" />
       </div>
       <div class="testing__text">
-        <span class="testing__text--label" v-if="(!keyError && !addressError) &&(!pending && !pendingKey)"  >Loading required information</span> <ph-spinner-gap v-if="(!keyError && !addressError) &&(!pending && !pendingKey)" class="testing__text--spinner" :size="32" />
+        <span class="testing__text--label" v-if="(!keyError && !addressError) &&(!pending && !pendingKey)"  >Loading required information</span>
+        <PHSpinnerGap v-if="(!keyError && !addressError) &&(!pending && !pendingKey)" class="testing__text--spinner" :size="32" />
       </div>
     </div>
   </setup-card>

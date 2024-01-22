@@ -502,17 +502,17 @@ watch(canvasElement, ()=> {
     </div>
     <audio @timeupdate="updateCurrentTime" @ended="endOfPlayback" class="player__audio" :loop="loopSetting === 2" ref="player"></audio>
     <div v-if="isAudioAnalysed" class="player__icons" >
-      <PhSkipBack @click="previousSong" class="player__icons--icon" weight="fill" size="60"></PhSkipBack>
-      <PhPlay class="player__icons--icon" @click="switchPlay" v-if="!isPlaying" weight="fill" size="90"></PhPlay>
-      <PhPause class="player__icons--icon" @click="switchPlay" v-else weight="fill" size="90"></PhPause>
-      <PhSkipForward @click="nextSong" class="player__icons--icon" weight="fill" size="60"></PhSkipForward>
+      <PHSkipBack @click="previousSong" class="player__icons--icon" weight="fill" size="60"></PHSkipBack>
+      <PHPlay class="player__icons--icon" @click="switchPlay" v-if="!isPlaying" weight="fill" size="90"></PHPlay>
+      <PHPause class="player__icons--icon" @click="switchPlay" v-else weight="fill" size="90"></PHPause>
+      <PHSkipForward @click="nextSong" class="player__icons--icon" weight="fill" size="60"></PHSkipForward>
     </div>
     <v-slider v-if="isAudioAnalysed" :disabled="!isPlaying" track-fill-color="#ffffca" thumb-color="#6de8ff" min="0" max="1" class="player__slider" v-model="volumeValue" direction="vertical" thumb-label></v-slider>
     <div v-if="isAudioAnalysed" class="player__right_block">
-      <Phx @click="resetPrompt" class="repeat--button" weight="light" size="60"></Phx>
-      <PhRepeat class="repeat--button" :class="{'repeat--button--active': loopSetting === 1}" v-if="loopSetting == 0 || loopSetting == 1" @click="changeLoopSetting" weight="light" size="60"></PhRepeat>
-      <PhRepeatOnce class="repeat--button repeat--button--active" v-else weight="light" size="60" @click="changeLoopSetting"></PhRepeatOnce>
-      <PhGear @click="openSettings" class="repeat--button" weight="light" size="60"></PhGear>
+      <PHX @click="resetPrompt" class="repeat--button" weight="light" size="60"></PHX>
+      <PHRepeat class="repeat--button" :class="{'repeat--button--active': loopSetting === 1}" v-if="loopSetting == 0 || loopSetting == 1" @click="changeLoopSetting" weight="light" size="60"></PHRepeat>
+      <PHRepeatOnce class="repeat--button repeat--button--active" v-else weight="light" size="60" @click="changeLoopSetting"></PHRepeatOnce>
+      <PHGear @click="openSettings" class="repeat--button" weight="light" size="60"></PHGear>
     </div>
     <Teleport to=".dash">
       <div class="canvas" ref="canvasContainer">

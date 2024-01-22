@@ -36,7 +36,7 @@ onMounted(()=> {
 <template>
   <setup-card>
     <div class="address__line--right" v-if="doesAddressExists"></div>
-    <ph-caret-right size="48" class="address__forward" v-if="doesAddressExists" @click="sendValue"></ph-caret-right>
+    <PHCaretRight size="48" class="address__forward" v-if="doesAddressExists" @click="sendValue"></PHCaretRight>
     <div class="address__message">First, please provide an address for your <br> Home Assistant app.
       It is the same address that you use to access Home Assistant web interface.<br>
       The default one is <a @click="setDefaultLink" target="_blank" href="http://localhost:8123" class="address__message--link">http://localhost:8123</a></div>
@@ -44,7 +44,7 @@ onMounted(()=> {
       <input class="address__input" type="text" :class="{'address__error': errorState}" v-model="addressValue">
       <button @click="sendValue" class="address__button">Proceed</button>
     <div class="address__line--left"></div>
-    <ph-caret-left size="48" class="address__back" @click="goBack"></ph-caret-left>
+    <PHCaretLeft size="48" class="address__back" @click="goBack"></PHCaretLeft>
   </setup-card>
 </template>
 

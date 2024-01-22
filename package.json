@@ -12,17 +12,17 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/fontaine": "^0.4.1",
-    "@unocss/nuxt": "^0.57.1",
-    "nuxt": "^3.8.2",
-    "nuxt-phosphor-icons": "^1.0.8",
-    "sass": "^1.69.5",
+    "@unocss/nuxt": "^0.57.7",
+    "nuxt": "^3.9.3",
+    "nuxt-phosphor-icons": "^1.2.2",
+    "sass": "^1.70.0",
     "vite-plugin-vuetify": "^1.0.2",
-    "vue": "^3.3.7",
+    "vue": "^3.4.15",
     "vue-router": "^4.2.5",
-    "vuetify": "^3.4.4"
+    "vuetify": "^3.5.1"
   },
   "dependencies": {
-    "@mdi/font": "^7.3.67",
+    "@mdi/font": "^7.4.47",
     "@pinia/nuxt": "^0.5.1",
     "@types/meyda": "^4.3.8",
     "jsmediatags": "^3.9.7",
@@ -33,6 +33,6 @@
     "pinia": "^2.1.7",
     "set-interval-async": "^3.0.3",
     "uuid": "^9.0.1",
-    "web-audio-beat-detector": "^8.1.56"
+    "web-audio-beat-detector": "^8.2.3"
   }
 }

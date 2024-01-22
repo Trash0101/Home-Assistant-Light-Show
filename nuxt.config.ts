@@ -13,12 +13,6 @@ export default defineNuxtConfig({
           })
       }
   ],
-      runtimeConfig: {
-          homeAssistKey: '',
-          homeAssistAddress: '',
-          public: {
-          }
-      },
     vite: {
       css: {
           preprocessorOptions: {

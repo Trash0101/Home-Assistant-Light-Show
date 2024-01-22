@@ -36,7 +36,7 @@ onMounted(async ()=> {
     <input class="address__input" type="text" :class="{'address__error': errorState}" v-model="keyValue">
     <button @click="sendValue" class="address__button">Proceed</button>
     <div class="address__line--left"></div>
-    <ph-caret-left size="48" class="address__back" @click="goBack"></ph-caret-left>
+    <PHCaretLeft size="48" class="address__back" @click="goBack"></PHCaretLeft>
   </setup-card>
 </template>
 

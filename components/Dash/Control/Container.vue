@@ -143,17 +143,17 @@
         <span class="global-settings__label">Current setting profile for the light/song combo</span>
         <div class="global-settings__profiles">
           <v-select class="global-settings__profiles--list" variant="underlined" :counter="true" :items="computedList" @update:modelValue="changeSetting" :modelValue="computedList[profileIndex]"></v-select>
-          <PhPlusCircle class="global-settings__profiles--icon" size="30" weight="fill" @click="createNewProfile"></PhPlusCircle>
+          <PHPlusCircle class="global-settings__profiles--icon" size="30" weight="fill" @click="createNewProfile"></PHPlusCircle>
         </div>
         <span class="global-settings__label">Selected song BPM</span>
           <span class="global-settings__label--bpm">{{Math.round(selectedSong.tempo)}}</span>
     </section>
     <div class="switcher">
-      <PhCircle @click="switchComponent(0)" :class="{'switcher__button--active': switcher == 0}" class="switcher__button" weight="fill" size="20"></PhCircle>
-      <PhCircle @click="switchComponent(1)" :class="{'switcher__button--active': switcher == 1}" class="switcher__button" weight="fill" size="20"></PhCircle>
-      <PhCircle @click="switchComponent(2)" :class="{'switcher__button--active': switcher == 2}" class="switcher__button" weight="fill" size="20"></PhCircle>
+      <PHCircle @click="switchComponent(0)" :class="{'switcher__button--active': switcher == 0}" class="switcher__button" weight="fill" size="20"></PHCircle>
+      <PHCircle @click="switchComponent(1)" :class="{'switcher__button--active': switcher == 1}" class="switcher__button" weight="fill" size="20"></PHCircle>
+      <PHCircle @click="switchComponent(2)" :class="{'switcher__button--active': switcher == 2}" class="switcher__button" weight="fill" size="20"></PHCircle>
     </div>
-    <Phx @click="closeSettings" class="control-container__close" weight="light" size="40"></Phx>
+    <PHX @click="closeSettings" class="control-container__close" weight="light" size="40"></PHX>
   </div>
   <div v-else class="control-container__error">
     <div class="control-container__error--message">Please select song and light to start editing the settings</div>
