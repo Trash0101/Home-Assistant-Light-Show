@@ -11,7 +11,7 @@ const mainStore = useHalsStoreMain()
 const {selectedLight, lampTempoGroups} = storeToRefs(mainStore)
 const playerStore = usePlayerStore();
 const {selectedSong, selectedSongIndex} = storeToRefs(playerStore)
-
+const wavesStore = useHalsWavesStore();
 const isMounted = ref(false)
 
 const isAudioAnalysed = ref(false)
@@ -226,6 +226,7 @@ const intervalInitialyzer = (index:number) => {
             }
           }
         })
+        //Previous rolloff is used to trigger flashes or darkness if difference between current and previous rolloff was greater than specified in settings
         previousRolloffs[index] = soundFeatures.value.spectralRolloff
         await $fetch('/api/setLightParams', {
           method:"post",
@@ -234,6 +235,7 @@ const intervalInitialyzer = (index:number) => {
             settings: lampSettings,
           }
         })
+        //When we use ranges instead of concrete values we send HS values to home assistant and not RGB because it's easier to convert into range
         const hslToRgb = (h:number, s:number, l:number):number[] => {
           let r, g, b;
 
@@ -300,12 +302,17 @@ const switchPlay = async () => {
     if(meydaAnalyzer){
       meydaAnalyzer.stop()
     }
+    //Here we reset waves colours and speed to default values;
+
     player.value?.pause();
+    wavesStore.resetToDefault()
   } else {
     if(meydaAnalyzer){
       meydaAnalyzer.start()
     }
     isPlaying.value = !isPlaying.value
+    //Setting waves to rhythm
+
     await player.value?.play();
     let startTime = performance.now()
     if(specifiedSettingsByBeatAndTimeline.value){
@@ -319,6 +326,7 @@ const switchPlay = async () => {
     let endTime = performance.now()
     console.log(`Creating and sending request took ${endTime-startTime}ms`)
     drawBeatBar()
+    wavesStore.setWavesRhythm(tempo.value)
   }
 }
 //This function handles end of playback depending on loop settings
@@ -452,7 +460,28 @@ watch(track, ()=> {
   })
   showSoundFeatures.value = true
 })
-
+const emits = defineEmits<{
+  (e: 'openSettings'): void
+}>()
+const openSettings = ()=> {
+  emits('openSettings')
+}
+//Check for confirmation to reset the app
+const resetting = ref(false)
+const resetPrompt = () => {
+  if(isPlaying.value){
+    switchPlay()
+  }
+  resetting.value = true;
+}
+const closeResetPrompt = () => {
+  resetting.value = false
+}
+const resetSequence = async () => {
+  await $fetch('/api/resetConfig')
+  reloadNuxtApp()
+  navigateTo('/')
+}
 onMounted(async ()=> {
   await nextTick()
   isMounted.value = true
@@ -478,10 +507,12 @@ watch(canvasElement, ()=> {
       <PhPause class="player__icons--icon" @click="switchPlay" v-else weight="fill" size="90"></PhPause>
       <PhSkipForward @click="nextSong" class="player__icons--icon" weight="fill" size="60"></PhSkipForward>
     </div>
-    <v-slider v-if="isAudioAnalysed" :disabled="!isPlaying" min="0" max="1" class="player__slider" v-model="volumeValue" direction="vertical" thumb-label></v-slider>
-    <div v-if="isAudioAnalysed" class="player__repeat">
-      <PhRepeat class="repeat--button" :class="{'repeat--button--active': loopSetting === 1}" v-if="loopSetting == 0 || loopSetting == 1" @click="changeLoopSetting" weight="fill" size="60"></PhRepeat>
-      <PhRepeatOnce class="repeat--button repeat--button--active" v-else weight="fill" size="60" @click="changeLoopSetting"></PhRepeatOnce>
+    <v-slider v-if="isAudioAnalysed" :disabled="!isPlaying" track-fill-color="#ffffca" thumb-color="#6de8ff" min="0" max="1" class="player__slider" v-model="volumeValue" direction="vertical" thumb-label></v-slider>
+    <div v-if="isAudioAnalysed" class="player__right_block">
+      <Phx @click="resetPrompt" class="repeat--button" weight="light" size="60"></Phx>
+      <PhRepeat class="repeat--button" :class="{'repeat--button--active': loopSetting === 1}" v-if="loopSetting == 0 || loopSetting == 1" @click="changeLoopSetting" weight="light" size="60"></PhRepeat>
+      <PhRepeatOnce class="repeat--button repeat--button--active" v-else weight="light" size="60" @click="changeLoopSetting"></PhRepeatOnce>
+      <PhGear @click="openSettings" class="repeat--button" weight="light" size="60"></PhGear>
     </div>
     <Teleport to=".dash">
       <div class="canvas" ref="canvasContainer">
@@ -490,12 +521,48 @@ watch(canvasElement, ()=> {
     </Teleport>
     <div v-if="isAudioAnalysed" class="player__duration">
       <div  class="player__duration--time">{{currentTimeReadable}}</div>
-      <v-slider class="player__duration--slider" min="0" :max="player.duration ?? 100" v-model="currentTime" @end="setCurrentPosition"></v-slider>
+      <v-slider class="player__duration--slider" min="0" track-fill-color="#ffffca" thumb-color="#6de8ff" :max="player.duration ?? 100" v-model="currentTime" @end="setCurrentPosition"></v-slider>
+    </div>
+  </div>
+  <div v-if="resetting" class="player__reset">
+    <div class="player__reset--text">Do you want to reset the whole app ?</div>
+    <div class="button_container">
+      <button class="button_container__button button_container__button--y" @click="resetSequence">YES</button>
+      <button class="button_container__button button_container__button--n" @click="closeResetPrompt">NO</button>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.button_container {
+  display: flex;
+  width: 60%;
+  align-items: center;
+  justify-content: space-around;
+  &__button {
+    color: #36454F;
+    font-size: 2.4rem;
+    padding: 1rem 6rem;
+    border-radius: 5rem;
+    background-color: $highlight;
+    box-shadow: .1rem .75rem .75rem rgba($highlight, .1);
+    transition: .2s ease-out;
+    &--n {
+      background-color: $highlight_success;
+    }
+    &--y {
+      background-color: $highlight_error;
+    }
+    &:hover {
+      transform: translateY(-.5rem) scale(1.02);
+    }
+    &:active {
+      background-color: $highlight_alt;
+      box-shadow: .1rem 1rem 1rem rgba($highlight_alt, .2);
+      transform: translateY(0) scale(1);
+    }
+  }
+}
 .analyze_values{
   position: absolute;
   bottom: -10rem;
@@ -544,6 +611,23 @@ watch(canvasElement, ()=> {
   align-content: center;
   border-radius: 1rem;
   background: linear-gradient(to bottom, $base_color 80%,  rgba($base_color_light, 0.1) 99%);
+  &__reset {
+    grid-row: 2/5;
+    grid-column: 2;
+    border-radius: 1rem;
+    background: linear-gradient(to bottom, $base_color 80%,  rgba($base_color_light, 0.1) 99%);
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    &--text {
+      text-align: center;
+      font-size: 3.6rem;
+      margin-bottom: 4rem;
+    }
+  }
   &__cover {
     display: flex;
     flex-direction: column;
@@ -609,7 +693,17 @@ watch(canvasElement, ()=> {
       color: $highlight_alt;
     }
   }
-
+  &__right_block {
+    margin-top: .5rem;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    height: 75%;
+    align-items: center;
+    justify-content: space-between;
+    grid-row: 1/3;
+    grid-column: 4;
+  }
 }
 .canvas {
   //border-radius: 1rem;

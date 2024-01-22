@@ -115,6 +115,12 @@
         selectedBeat.value = '1'
     }
   }
+  const emits = defineEmits<{
+    (e: 'closeSettings'): void
+  }>()
+  const closeSettings = ()=> {
+    emits('closeSettings')
+  }
   onMounted(()=>{
     selectedLight.value.selectedSetting = 0
     switchBeatSet()
@@ -147,14 +153,16 @@
       <PhCircle @click="switchComponent(1)" :class="{'switcher__button--active': switcher == 1}" class="switcher__button" weight="fill" size="20"></PhCircle>
       <PhCircle @click="switchComponent(2)" :class="{'switcher__button--active': switcher == 2}" class="switcher__button" weight="fill" size="20"></PhCircle>
     </div>
+    <Phx @click="closeSettings" class="control-container__close" weight="light" size="40"></Phx>
   </div>
-  <div class="control-container__error">
+  <div v-else class="control-container__error">
     <div class="control-container__error--message">Please select song and light to start editing the settings</div>
   </div>
   </template>
 
   <style scoped lang="scss">
   .control-container{
+    position: relative;
     padding: 2rem;
     grid-row: 2/5;
     grid-column: 2/3;
@@ -168,6 +176,24 @@
     background: linear-gradient(to bottom, $base_color 80%,  rgba($base_color_light, 0.1) 99%);
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr 4fr 5%;
+    &__close {
+      position: absolute;
+      right: 2rem;
+      top: 2rem;
+      color: $highlight_alt;
+      transition: all .1s ease-out;
+      &:hover{
+        transform: translateY(-.2rem) scale(1.05);
+        cursor: pointer;
+      }
+      &:active {
+        transform: translateY(0) scale(1);
+        color: $highlight
+      }
+      &--active {
+        color: $highlight
+      }
+    }
     &__error {
       padding: 4rem;
       grid-row: 2/5;

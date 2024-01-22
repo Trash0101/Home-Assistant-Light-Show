@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
                 await $fetch(`${address}/api/services/light/turn_on`, {
                     method: 'post',
                     headers: {
-                        authorization: `Bearer ${runtimeConfig.key}`,
+                        authorization: `Bearer ${key}`,
                         accept: '*/*'
                     },
                     body: {
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
                 await $fetch(`${address}/api/services/light/turn_on`, {
                     method: 'post',
                     headers: {
-                        authorization: `Bearer ${runtimeConfig.key}`,
+                        authorization: `Bearer ${key}`,
                         accept: '*/*'
                     },
                     body: {
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
                 await $fetch(`${address}/api/services/light/turn_on`, {
                     method: 'post',
                     headers: {
-                        authorization: `Bearer ${runtimeConfig.key}`,
+                        authorization: `Bearer ${key}`,
                         accept: '*/*'
                     },
                     body: {
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
                 await $fetch(`${address}/api/services/light/turn_on`, {
                     method: 'post',
                     headers: {
-                        authorization: `Bearer ${runtimeConfig.key}`,
+                        authorization: `Bearer ${key}`,
                         accept: '*/*'
                     },
                     body: {

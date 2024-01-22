@@ -30,7 +30,7 @@ const isActive = computed(()=>{
 
 <template>
 <div :class="{active: isActive}" @click="setCurrentLight" class="lightInfo">
-  <div :style="lightColorInfoClass"  class="lightInfo__color">color</div>
+  <div :style="lightColorInfoClass"  class="lightInfo__color"></div>
   <div class="lightInfo__main">
     <span>{{props.light.attributes.friendly_name}}</span>
     <span>Status: {{light.state}}</span>
@@ -52,7 +52,7 @@ const isActive = computed(()=>{
   justify-content: space-between;
   transition: all .1s ease-out;
   &__color {
-    height: 80%;
+    height: 6rem;
     width: 6rem;
     clip-path: circle(2rem);
   }

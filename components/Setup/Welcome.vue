@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import SetupCard from "~/components/Base/SetupCard.vue";
 const emits = defineEmits<{
-  (e: 'next', component: string): void
+  (e: 'next', component: string, direction:string): void
 }>()
 const nextCard = ()=> {
-  emits('next', 'setupAddress')
+  emits('next', 'setupAddress', 'forward')
 }
 </script>
 

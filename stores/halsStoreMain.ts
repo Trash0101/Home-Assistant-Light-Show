@@ -3,6 +3,7 @@ import errorLight from "~/composables/errorLight";
 import {computed} from "vue";
 export const useHalsStoreMain = defineStore('main', () => {
     const playerStore = usePlayerStore()
+    const wavesStore = useHalsWavesStore()
     const {selectedSong, selectedSongIndex} = storeToRefs(playerStore);
     const lightsList = ref<Light[]>([])
     const numOfLights = computed(()=> {
@@ -120,12 +121,13 @@ export const useHalsStoreMain = defineStore('main', () => {
             }
         })
     }
-    const setLightRGBValue = (id:string, rgb:number[]) => {
+    const setLightRGBValue = (id:string, rgb:[number, number, number]) => {
         let desiredIndex = getLightIndex(id)
         if(desiredIndex === -1) {
             return false
         }
         lightsList.value[desiredIndex].attributes.rgb_color = [...rgb]
+        wavesStore.setWaveColor(desiredIndex, rgb)
     }
 
     return {

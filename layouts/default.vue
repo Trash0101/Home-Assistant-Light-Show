@@ -1,5 +1,24 @@
 <script setup lang="ts">
+import {useHalsWavesStore} from "~/stores/halsWavesStore";
 
+const wavesStore = useHalsWavesStore()
+const {waves} = storeToRefs(wavesStore)
+
+const firstWaveAnimation = ref(`animation-delay:${waves.value[0].animationDelay}; animation-duration:${waves.value[0].animationDuration}`)
+
+const secondWaveAnimation = ref(`animation-delay:${waves.value[1].animationDelay}; animation-duration:${waves.value[1].animationDuration}`)
+
+const thirdWaveAnimation = ref(`animation-delay:${waves.value[2].animationDelay}; animation-duration:${waves.value[2].animationDuration}`)
+watch(waves, ()=> {
+  console.log(waves.value)
+  firstWaveAnimation.value = `animation-delay:${waves.value[0].animationDelay}; animation-duration:${waves.value[0].animationDuration}`
+
+  secondWaveAnimation.value = `animation-delay:${waves.value[1].animationDelay}; animation-duration:${waves.value[1].animationDuration}`
+
+  thirdWaveAnimation.value = `animation-delay:${waves.value[2].animationDelay}; animation-duration:${waves.value[2].animationDuration}`
+}, {
+  deep: true
+})
 </script>
 
 <template>
@@ -20,9 +39,9 @@
     v44h-352z" />
     </defs>
     <g class="parallax">
-      <use xlink:href="#gentle-wave" x="50" y="0" fill="#6de8ff"/>
-      <use xlink:href="#gentle-wave" x="50" y="3" fill="#3a7f8c"/>
-      <use xlink:href="#gentle-wave" x="50" y="6" fill="#4da9bb"/>
+      <use :style="firstWaveAnimation" xlink:href="#gentle-wave" x="50" y="0" :fill="waves[2].color"/>
+      <use :style="secondWaveAnimation" xlink:href="#gentle-wave" x="50" y="3" :fill="waves[1].color"/>
+      <use :style="thirdWaveAnimation" xlink:href="#gentle-wave" x="50" y="6" :fill="waves[0].color"/>
     </g>
   </svg>
 </template>
@@ -35,9 +54,9 @@
 ::selection{background-color: #c72e1c; color: white;}
 .parallax > use{
   animation:move-forever 12s linear infinite;
-  &:nth-child(1){animation-delay:-2s;}
-  &:nth-child(2){animation-delay:-2s; animation-duration:5s}
-  &:nth-child(3){animation-delay:-4s; animation-duration:3s}
+  //&:nth-child(1){animation-delay:-2s; animation-duration:12s}
+  //&:nth-child(2){animation-delay:-2s; animation-duration:8s}
+  //&:nth-child(3){animation-delay:-4s; animation-duration:4s}
 }
 
 @keyframes move-forever{

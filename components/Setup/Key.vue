@@ -6,7 +6,7 @@ const errorState = ref(false)
 const keyValue = ref('')
 const {key} = storeToRefs(setupStore)
 const emits = defineEmits<{
-  (e: 'next', component: string): void
+  (e: 'next', component: string, direction:string): void
 }>()
 const sendValue = () => {
   const success = setupStore.setKey(keyValue.value)
@@ -14,11 +14,11 @@ const sendValue = () => {
     errorState.value = true;
   } else {
     errorState.value = false;
-    emits('next', 'setupTest')
+    emits('next', 'setupTest', 'forward')
   }
 }
 const goBack = () => {
-  emits('next', 'setupAddress')
+  emits('next', 'setupAddress', 'back')
 }
 onMounted(async ()=> {
   if(!!key.value) {

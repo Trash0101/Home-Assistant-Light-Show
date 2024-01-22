@@ -2,6 +2,7 @@
 import {SetupWelcome, SetupAddress, SetupKey, SetupTest} from "#components";
 const activeComponent = ref('setupWelcome')
 const isConfigSet = await $fetch('/api/checkConfig')
+const direction = ref('forward')
 const sliderDots = computed(()=> {
   if(activeComponent.value == 'setupWelcome'){
     return SetupWelcome
@@ -13,8 +14,9 @@ const sliderDots = computed(()=> {
     return SetupTest
   }
 })
-const changeActiveComp = (name:string) => {
+const changeActiveComp = (name:string, dir:string) => {
   activeComponent.value = name
+  direction.value = dir
 }
 if(isConfigSet.result) {
   navigateTo({
@@ -26,7 +28,9 @@ if(isConfigSet.result) {
 <template>
   <div class="flex-center">
     <div class="main-container">
-      <component @next="changeActiveComp" :is="sliderDots"></component>
+      <transition :name="direction">
+        <component @next="changeActiveComp" :is="sliderDots"></component>
+      </transition>
       <div class="slides" v-if="activeComponent !== 'setupTest'">
         <div class="slides__dots" :class="{'slides__dots--active': activeComponent === 'setupWelcome'}"></div>
         <div class="slides__dots" :class="{'slides__dots--active': activeComponent === 'setupAddress'}"></div>
@@ -77,5 +81,50 @@ if(isConfigSet.result) {
       box-shadow: .1rem .1rem 1rem rgba($highlight_alt, .4);
     }
   }
+}
+.forward-enter-from {
+  transform: translate(100%, -50%);
+  opacity: 0;
+}
+.forward-enter-active {
+  transition: all .3s ease-in;
+}
+.forward-enter-to {
+  transform: translate(0, -50%);
+  opacity: 1;
+}
+.forward-leave-from {
+  transform: translate(0, 50%);
+  opacity: 1;
+}
+.forward-leave-active {
+  transition: all .3s ease-out;
+}
+.forward-leave-to {
+  transform: translate(-100%, 50%);
+  opacity: 0;
+}
+
+.back-enter-from {
+  transform: translate(-100%, -50%);
+  opacity: 0;
+}
+.back-enter-active {
+  transition: all .3s ease-in;
+}
+.back-enter-to {
+  transform: translate(0, -50%);
+  opacity: 1;
+}
+.back-leave-from {
+  transform: translate(0, 50%);
+  opacity: 1;
+}
+.back-leave-active {
+  transition: all .3s ease-out;
+}
+.back-leave-to {
+  transform: translate(100%, 50%);
+  opacity: 0;
 }
 </style>

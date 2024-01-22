@@ -9,7 +9,7 @@ const setDefaultLink = () => {
   addressValue.value = 'http://localhost:8123';
 }
 const emits = defineEmits<{
-  (e: 'next', component: string): void
+  (e: 'next', component: string, direction: string): void
 }>()
 const sendValue = () => {
   const success = setupStore.setAddress(addressValue.value)
@@ -17,11 +17,11 @@ const sendValue = () => {
     errorState.value = true;
   } else {
     errorState.value = false;
-    emits('next', 'setupKey')
+    emits('next', 'setupKey', 'forward')
   }
 }
 const goBack = () => {
-  emits('next', 'setupWelcome')
+  emits('next', 'setupWelcome', 'back')
 }
 const doesAddressExists = computed(()=> {
   return !!address.value

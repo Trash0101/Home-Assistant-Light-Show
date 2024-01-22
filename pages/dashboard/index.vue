@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {setStoreLights, useHalsStoreMain} from "#imports";
+import {setStoreLights, useHalsStoreMain, usePlayerStore} from "#imports";
 import DashAudioPlayer from "~/components/Dash/AudioPlayer.vue";
 import DashSongsList from "~/components/Dash/List/Songs.vue";
 
@@ -7,12 +7,28 @@ useHead({
   title: 'Dashboard'
 })
 const mainStore = useHalsStoreMain()
+const playerStore = usePlayerStore()
+const {selectedSongIndex}  = storeToRefs(playerStore)
 const {selectedLightExists} = storeToRefs(mainStore)
 const devToggle = ref(false)
 const componentMounted = ref(false);
 const refreshLights = async ()=> {
   await setStoreLights()
 }
+const resetConfig = async () => {
+  await $fetch('/api/resetConfig')
+  navigateTo({
+    path: '/'
+  })
+}
+
+const isConfigSet = await $fetch('/api/checkConfig')
+if(!isConfigSet.result) {
+  navigateTo({
+    path: '/'
+  })
+}
+
 const devToggler = ()=>{
   devToggle.value = !devToggle.value
 }
@@ -24,19 +40,22 @@ onMounted(()=>{
 <template>
     <section class="dash">
       <dash-list-lights></dash-list-lights>
-      <dash-audio-player v-if="selectedLightExists && componentMounted"></dash-audio-player>
-      <dash-control-container v-if="devToggle && selectedLightExists && componentMounted"></dash-control-container>
+      <dash-audio-player @open-settings="devToggler" v-if="selectedLightExists && componentMounted"></dash-audio-player>
+      <dash-control-container @close-settings="devToggler" v-if="devToggle && selectedLightExists && componentMounted"></dash-control-container>
       <div class="error__no_lights" v-if="!selectedLightExists && componentMounted">
         <div class="error__no_lights--text">Sorry, but there are no lights in your Home Assistant app.</div>
         <div class="button_container">
-          <button class="button_container__button">Reset</button>
+          <button class="button_container__button" @click="resetConfig">Reset</button>
           <button class="button_container__button" @click="refreshLights">Refresh</button>
         </div>
       </div>
-      <dash-list-songs></dash-list-songs>
-      <div class="dev__toggle" v-if="selectedLightExists && componentMounted">
-        <button class="dev__button" @click="devToggler">Change</button>
+      <div class="error__no_lights" v-if="selectedSongIndex === -1 && !(!selectedLightExists && componentMounted)">
+        <div class="error__no_lights--text">Upload a song to begin!</div>
       </div>
+      <dash-list-songs></dash-list-songs>
+<!--      <div class="dev__toggle" v-if="selectedLightExists && componentMounted">-->
+<!--        <button class="dev__button" @click="devToggler">Change</button>-->
+<!--      </div>-->
     </section>
 </template>
 

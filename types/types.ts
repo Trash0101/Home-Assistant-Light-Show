@@ -87,6 +87,11 @@ export interface Light {
     songSettings:SongSetting[],
     selectedSetting: number
 }
+export interface Wave {
+    color: string,
+    animationDuration: string,
+    animationDelay: string,
+}
 
 export interface Song {
     id: string
