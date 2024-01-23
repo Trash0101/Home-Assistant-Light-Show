@@ -33,7 +33,12 @@ useHead({
   ],
 })
 const appInitialized = ref(false)
+const tiPidor = ref('ahahaahahahah suka pidar')
+const pidorCheck = (ti:string)=> {
+  return true
+}
 const initialize = async () => {
+
   await setStoreLights()
   mainStore.setSelectedLightIndex(0);
   appInitialized.value = true
